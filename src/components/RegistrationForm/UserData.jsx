@@ -8,7 +8,7 @@ function UserData({ onSubmit }) {
   return (
     <form onSubmit={event => {
       event.preventDefault()
-      onSubmit()
+      onSubmit({email, password})
     }}>
       <TextField
         id='email'

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TextField, Button } from '@material-ui/core'
 
-function DeliveryData({ onSubmit }) {
+function ShippingData({ onSubmit }) {
   const [postalCode, setPostalCode] = useState('')
   const [address, setAddress] = useState('')
   const [unit, setUnit] = useState('')
@@ -69,4 +69,4 @@ function DeliveryData({ onSubmit }) {
   )
 }
 
-export default DeliveryData
+export default ShippingData

@@ -12,7 +12,7 @@ function PersonalData({ onSubmit, validateId }) {
   return (
     <form onSubmit={event => {
       event.preventDefault()
-      onSubmit()
+      onSubmit({name, lastName, id, sales, newsletter})
     }}>
       <TextField
         id='name'
