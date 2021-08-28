@@ -1,21 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { TextField, Button, Switch, FormControlLabel } from '@material-ui/core'
+import RegistrationValidators from '../../context/RegistrationValidators'
 
-function PersonalData({ onSubmit, validateId }) {
+function PersonalData({ onSubmit }) {
   const [name, setName] = useState('')
   const [lastName, setLastName] = useState('')
   const [id, setId] = useState('')
   const [sales, setSales] = useState(true)
   const [newsletter, setNewsletter] = useState(true)
   const [errors, setErrors] = useState({ id: { valid: true, text: ''} })
+  const validators = useContext(RegistrationValidators)
+
+  function validate(event) {
+    const { name, value } = event.target
+    const newState = { ...errors }
+    newState[name] = validators[name](value)
+    setErrors(newState)
+  }
+
+  function isValidForm(){
+    for(let field in errors) {
+      if(!errors[field].valid){
+        return false
+      }
+    }
+
+    return true
+  }
 
   return (
     <form onSubmit={event => {
       event.preventDefault()
-      onSubmit({name, lastName, id, sales, newsletter})
+      if(isValidForm()) {
+        onSubmit({name, lastName, id, sales, newsletter})
+      }
     }}>
       <TextField
         id='name'
+        name='name'
         value={name}
         onChange={event => setName(event.target.value)}
         label='name'
@@ -25,6 +47,7 @@ function PersonalData({ onSubmit, validateId }) {
       />
       <TextField
         id='lastName'
+        name='lastName'
         value={lastName}
         onChange={event => setLastName(event.target.value)}
         label='Last name'
@@ -34,9 +57,10 @@ function PersonalData({ onSubmit, validateId }) {
       />
       <TextField
         id='id'
+        name='id'
         value={id}
         onChange={event => setId(event.target.value)}
-        onBlur={event => setErrors({ id: validateId(event.target.value) })}
+        onBlur={validate}
         error={!errors.id.valid}
         helperText={errors.id.text}
         label='ID'

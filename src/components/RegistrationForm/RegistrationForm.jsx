@@ -4,7 +4,7 @@ import ShippingData from './ShippingData'
 import PersonalData from './PersonalData'
 import UserData from './UserData'
 
-function RegistrationForm({ onSubmit, validateId }) {
+function RegistrationForm({ onSubmit }) {
   const [currentStep, setCurrentStep] = useState(0)
   const [formData, setFormData] = useState({})
 
@@ -16,7 +16,7 @@ function RegistrationForm({ onSubmit, validateId }) {
 
   const forms = [
     <UserData onSubmit={addFormData} />,
-    <PersonalData onSubmit={addFormData} validateId={validateId} />,
+    <PersonalData onSubmit={addFormData} />,
     <ShippingData onSubmit={addFormData} />,
     <Typography variant='h5'>Data saved successfully! Thank you :)</Typography>
   ]
