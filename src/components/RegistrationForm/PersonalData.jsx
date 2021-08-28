@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { TextField, Button, Switch, FormControlLabel } from '@material-ui/core'
 import RegistrationValidators from '../../context/RegistrationValidators'
+import useErrors from '../../hooks/useErrors'
 
 function PersonalData({ onSubmit }) {
   const [name, setName] = useState('')
@@ -8,25 +9,8 @@ function PersonalData({ onSubmit }) {
   const [id, setId] = useState('')
   const [sales, setSales] = useState(true)
   const [newsletter, setNewsletter] = useState(true)
-  const [errors, setErrors] = useState({ id: { valid: true, text: ''} })
   const validators = useContext(RegistrationValidators)
-
-  function validate(event) {
-    const { name, value } = event.target
-    const newState = { ...errors }
-    newState[name] = validators[name](value)
-    setErrors(newState)
-  }
-
-  function isValidForm(){
-    for(let field in errors) {
-      if(!errors[field].valid){
-        return false
-      }
-    }
-
-    return true
-  }
+  const [errors, validate, isValidForm] = useErrors(validators)
 
   return (
     <form onSubmit={event => {
